@@ -9,14 +9,15 @@ package prfsemana03alejandroespinoza.proyectointrocajero;
  * @author aleja
  */
 public class clsMenu {
-    public void MenuAdministrador(){
+
+    public void MenuAdministrador() {
         clsHelper clsH = new clsHelper();
         clsAdministrador clsAdmin = new clsAdministrador();
         clsAdministrador administradores[] = new clsAdministrador[0];
         int posAdministrador = 0;
         boolean listaAdministradores = false;
         char opcion = 'S';
-        
+
         do {
             opcion = clsH.recibeChar("Seleccione una de las siguientes opciones:\n"
                     + "A. Generar lista administradores\n"
@@ -26,19 +27,19 @@ public class clsMenu {
                     + "E. Listar Administradores\n"
                     + "F  Administrar Clientes\n"
                     + "S. Sair");
-            switch(opcion) {
+            switch (opcion) {
                 case 'A':
-                    if (listaAdministradores){
+                    if (listaAdministradores) {
                         char nuevaLista = 'N';
-                        do{
+                        do {
                             nuevaLista = clsH.recibeChar("¿Desea generar una nueva lista? \n S - Si \n N - No");
-                        }while (nuevaLista != 'S' && nuevaLista != 'N');
-                        if (nuevaLista == 'S'){
+                        } while (nuevaLista != 'S' && nuevaLista != 'N');
+                        if (nuevaLista == 'S') {
                             administradores = clsAdmin.generarlistaAdministrador();
                             posAdministrador = 0;
                             listaAdministradores = true;
                         }
-                    }else{
+                    } else {
                         clsH.imprimeMensaje("Se genera una lista de administradores nueva");
                         administradores = clsAdmin.generarlistaAdministrador();
                         clsH.imprimeMensaje("Lista de administradores generada");
@@ -48,31 +49,36 @@ public class clsMenu {
                 case 'B':
                     clsH.imprimeMensaje("Se agrega un administrador");
                     if (listaAdministradores) {
-                        if (posAdministrador < administradores.length){
-                            posAdministrador = clsAdmin.agregarCliente(administradores, posAdministrador);
-                            clsH.imprimeMensaje("El cliente ha sido agregado satifactriamente");
-                        }else{
+                        if (posAdministrador < administradores.length) {
+                            posAdministrador = clsAdmin.agregarAdministrador(administradores, posAdministrador);
+                            clsH.imprimeMensaje("El administrador ha sido agregado exitosamente");
+                        } else {
                             clsH.imprimeMensaje("La lista de administradores se ha llenado");
                         }
-                    }else{
+                    } else {
                         clsH.imprimeMensaje("Lista de administradores aun no ha sido generada generada");
                     }
                     break;
                 case 'C':
+                    if (posAdministrador == 0) {
+                    clsH.imprimeMensaje("No existen administradores, agregue uno primero");
+                    } else {
                     clsH.imprimeMensaje("Se modifica un administrador");
+                    administradores = clsAdmin.modificarAdministrador(administradores, posAdministrador);
+                    }
                     break;
                 case 'D':
                     clsH.imprimeMensaje("Se habilita o deshabilita un administrador");
                     break;
                 case 'E':
                     clsH.imprimeMensaje("Se listan los administradores");
-                    if (listaAdministradores){
-                        if (posAdministrador == 0){
+                    if (listaAdministradores) {
+                        if (posAdministrador == 0) {
                             clsH.imprimeMensaje("No hay clientes para mostrar en la lista");
-                        }else{
+                        } else {
                             clsAdmin.listarAdministradores(administradores, posAdministrador);
                         }
-                    }else{
+                    } else {
                         clsH.imprimeMensaje("Aun no se ha generado una lista");
                     }
                     break;
@@ -85,11 +91,11 @@ public class clsMenu {
                     clsH.imprimeMensaje("La opcion no es valida");
                     break;
             }
-        }while(opcion != 'S');
-        
+        } while (opcion != 'S');
+
     }
 
-    public void MenuAdministrarClientes(){
+    public void MenuAdministrarClientes() {
         clsHelper clsH = new clsHelper();
         char opcion = 'R';
         do {
@@ -101,7 +107,7 @@ public class clsMenu {
                     + "E. Listar Clientes\n"
                     + "F  Administrar Cuentas\n"
                     + "R. Regresar a Administrador");
-            switch(opcion) {
+            switch (opcion) {
                 case 'A':
                     clsH.imprimeMensaje("Se genera una lista de clientes nueva");
                     break;
@@ -126,11 +132,11 @@ public class clsMenu {
                     clsH.imprimeMensaje("La opcion no es valida");
                     break;
             }
-        }while(opcion != 'R');
-        
+        } while (opcion != 'R');
+
     }
-    
-    public void MenuAdministrarCuentas(){
+
+    public void MenuAdministrarCuentas() {
         clsHelper clsH = new clsHelper();
         char opcion = 'R';
         do {
@@ -141,7 +147,7 @@ public class clsMenu {
                     + "D. Elimintar Cuenta\n"
                     + "E. Listar Cuentas\n"
                     + "R. Regresar a Clientes");
-            switch(opcion) {
+            switch (opcion) {
                 case 'A':
                     clsH.imprimeMensaje("Se genera una lista de clientes nueva");
                     break;
@@ -163,12 +169,11 @@ public class clsMenu {
                     clsH.imprimeMensaje("La opcion no es valida");
                     break;
             }
-        }while(opcion != 'R');
-        
-    } 
-    
-    
-    public void MenuCliente(){
+        } while (opcion != 'R');
+
+    }
+
+    public void MenuCliente() {
         clsHelper clsH = new clsHelper();
         char opcion = 'S';
         do {
@@ -176,7 +181,7 @@ public class clsMenu {
                     + "A. Revisar Estado de Cuentas\n"
                     + "B. Hacer retiro de dinero\n"
                     + "S. Sair");
-            switch(opcion) {
+            switch (opcion) {
                 case 'A':
                     clsH.imprimeMensaje("Se le daran los resultados de la cuenta");
                     break;
@@ -189,8 +194,7 @@ public class clsMenu {
                     clsH.imprimeMensaje("La opcion no es valida");
                     break;
             }
-        }while(opcion != 'S');
-        
-    
+        } while (opcion != 'S');
+
     }
 }

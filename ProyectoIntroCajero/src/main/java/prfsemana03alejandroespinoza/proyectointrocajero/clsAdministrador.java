@@ -11,6 +11,7 @@ import java.awt.TextArea;
  * @author aleja
  */
 public class clsAdministrador {
+
     private String Identificacion;
     private String Nombre;
     private String Puesto;
@@ -80,36 +81,89 @@ public class clsAdministrador {
 
     @Override
     public String toString() {
-        return Identificacion + "\t" + Nombre + "\t" + Puesto + "\t" + Contrasenna + "\t" + AnnoIngreso;
+        return Identificacion + "\t" + Nombre + "\t" + Puesto + "\t" + Contrasenna + "\t" + AnnoIngreso + "\t" + Habilitado;
     }
-    
-    public clsAdministrador[] generarlistaAdministrador(){
+
+    public clsAdministrador[] generarlistaAdministrador() {
         clsHelper clsH = new clsHelper();
         int tamano = clsH.recibeInt("Digite la cantidad de administradores que desea almacenar");
         clsAdministrador administradores[] = new clsAdministrador[tamano];
         return administradores;
     }
-    
-    public int agregarCliente(clsAdministrador administradores[], int posAdministrador){
+
+    public int agregarAdministrador(clsAdministrador administradores[], int posAdministrador) {
         clsHelper clsH = new clsHelper();
         String Identificacion = clsH.recibeString("Digite la identifacion:");
         String Nombre = clsH.recibeString("Digite el nombre completo:");
         String Puesto = clsH.recibeString("Digite el puesto:");
         String Contrasenna = clsH.recibeString("Digite la contraseña:");
         String AnnoIngreso = clsH.recibeString("Digite el año de ingreso:");
-        char Habilitado = 'H';
-        administradores[posAdministrador]= new clsAdministrador(Identificacion, Nombre, Puesto, Contrasenna, AnnoIngreso, Habilitado);
+        char Habilitado = 'S';
+        administradores[posAdministrador] = new clsAdministrador(Identificacion, Nombre, Puesto, Contrasenna, AnnoIngreso, Habilitado);
         posAdministrador++;
         return posAdministrador;
     }
-    
-    public void listarAdministradores(clsAdministrador administradores[], int posAdministrador){
-        String impresion = "Identificacion\tNombre\tPuesto\tContraseña\tAño de Ingreso\n";
+
+    public int obtenerPosAdministrador(clsAdministrador administradores[], int posAdministrador) {
         clsHelper clsH = new clsHelper();
-        for (int i = 0; i<posAdministrador; i++){
-            impresion += "\n"+administradores[i].toString()+"\n";
+        String nombreBuscar = clsH.recibeString("Digite el nombre del administrador que desea modificar:");
+        int posAdministradorBuscado = -1;
+        for (int i = 0; i < posAdministrador; i++) {
+            if (nombreBuscar.equalsIgnoreCase(administradores[i].getNombre())) {
+                posAdministradorBuscado = i;
+                break;
+            }
         }
-            clsH.imprimeMensaje(new TextArea(impresion));
+        return posAdministradorBuscado;
     }
-        
+
+    public clsAdministrador[] modificarAdministrador(clsAdministrador administradores[], int posAdministrador) {
+        clsHelper clsH = new clsHelper();
+        int pos = this.obtenerPosAdministrador(administradores, posAdministrador);
+        if (pos == -1) {
+            clsH.imprimeMensaje("No se encontraron administradores con el nombre indicado, intente nuevamente");
+        } else {
+            char opcion = 'S';
+            do {
+                opcion = clsH.recibeChar("Seleccione el tipo de dato que desea modificar: "
+                        + "\n A. Nombre"
+                        + "\n B. Puesto"
+                        + "\n C. Contrasenna"
+                        + "\n D. Anno de Ingreso"
+                        + "\n S. Salir");
+
+                switch (opcion) {
+                    case 'A':
+                        administradores[pos].setNombre(clsH.recibeString("Digite el nuevo nombre completo del administrador:"));
+                        break;
+                    case 'B':
+                        administradores[pos].setPuesto(clsH.recibeString("Digite el nuevo puesto del administrador:"));
+                        break;
+                    case 'C':
+                        administradores[pos].setContrasenna(clsH.recibeString("Digite la nueva contrasenna del Administrador"));
+                        break;
+                    case 'D':
+                        administradores[pos].setAnnoIngreso(clsH.recibeString("Digite el nuevo anno de ingreso del Administrador"));
+                        break;
+                    case 'S':
+                        clsH.imprimeMensaje("Los datos se han modificado exitosamente");
+                        break;
+                    default:
+                        clsH.imprimeMensaje("La opcion no es valida");
+                }
+
+            } while (opcion != 'S');
+        }
+        return administradores;
+    }
+
+    public void listarAdministradores(clsAdministrador administradores[], int posAdministrador) {
+        String impresion = "Identificacion\tNombre\tPuesto\tContraseña\tAño de Ingreso\tHabilitado\n";
+        clsHelper clsH = new clsHelper();
+        for (int i = 0; i < posAdministrador; i++) {
+            impresion += "\n" + administradores[i].toString() + "\n";
+        }
+        clsH.imprimeMensaje(new TextArea(impresion));
+    }
+
 }
