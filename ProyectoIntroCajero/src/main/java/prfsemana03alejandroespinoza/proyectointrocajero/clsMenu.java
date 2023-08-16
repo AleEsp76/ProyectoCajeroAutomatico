@@ -68,7 +68,11 @@ public class clsMenu {
                     }
                     break;
                 case 'D':
-                    clsH.imprimeMensaje("Se habilita o deshabilita un administrador");
+                    if (posAdministrador == 0) {
+                    clsH.imprimeMensaje("No existen administradores, agregue uno primero");
+                    } else { 
+                    administradores = clsAdmin.cambiarEstadoHabilitadoDeshabilitado(administradores, posAdministrador);
+                    }
                     break;
                 case 'E':
                     clsH.imprimeMensaje("Se listan los administradores");
