@@ -157,6 +157,28 @@ public class clsAdministrador {
         return administradores;
     }
 
+    public clsAdministrador[] cambiarEstadoHabilitadoDeshabilitado(clsAdministrador administradores[], int posAdministrador) {
+        clsHelper clsH = new clsHelper();
+        int pos = this.obtenerPosAdministrador(administradores, posAdministrador);
+        if (pos == -1) {
+            clsH.imprimeMensaje("No se encontraron administradores con el nombre indicado, intente nuevamente");
+        } else {
+            char nuevoEstado;
+
+            if (administradores[pos].getHabilitado() == 'S') {
+                nuevoEstado = 'N';
+                clsH.imprimeMensaje("El administrador ha sido deshabilitado");
+            } else {
+                nuevoEstado = 'S';
+                clsH.imprimeMensaje("El administrador ha sido habilitado");
+            }
+
+            administradores[pos].setHabilitado(nuevoEstado);
+            
+        }
+        return administradores;
+    }
+
     public void listarAdministradores(clsAdministrador administradores[], int posAdministrador) {
         String impresion = "Identificacion\tNombre\tPuesto\tContraseña\tAño de Ingreso\tHabilitado\n";
         clsHelper clsH = new clsHelper();
