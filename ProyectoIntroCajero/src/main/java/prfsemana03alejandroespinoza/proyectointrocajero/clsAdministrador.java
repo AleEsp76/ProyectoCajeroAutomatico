@@ -98,7 +98,7 @@ public class clsAdministrador {
         String Puesto = clsH.recibeString("Digite el puesto:");
         String Contrasenna = clsH.recibeString("Digite la contraseña:");
         String AnnoIngreso = clsH.recibeString("Digite el año de ingreso:");
-        char Habilitado = 'H';
+        char Habilitado = 'S';
         administradores[posAdministrador] = new clsAdministrador(Identificacion, Nombre, Puesto, Contrasenna, AnnoIngreso, Habilitado);
         posAdministrador++;
         return posAdministrador;
