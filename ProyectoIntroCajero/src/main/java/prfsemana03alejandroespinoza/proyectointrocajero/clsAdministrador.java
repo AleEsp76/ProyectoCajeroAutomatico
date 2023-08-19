@@ -25,7 +25,7 @@ public class clsAdministrador {
         this.Puesto = Puesto;
         this.Contrasenna = Contrasenna;
         this.AnnoIngreso = AnnoIngreso;
-        this.Habilitado = Habilitado; //H-Habilitado, D-Desabilitado
+        this.Habilitado = Habilitado; //S-Habilitado, N-Desabilitado
     }
 
     public clsAdministrador() {
@@ -176,6 +176,12 @@ public class clsAdministrador {
             administradores[pos].setHabilitado(nuevoEstado);
             
         }
+        return administradores;
+    }
+    
+    public clsAdministrador[] eliminaradministrador(clsAdministrador administradores[], int posAdministrador){
+    
+        
         return administradores;
     }
 
