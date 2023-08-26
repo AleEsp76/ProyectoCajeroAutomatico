@@ -13,6 +13,9 @@ public class clsHelper {
     public int recibeInt(String mensaje){
         return Integer.parseInt(JOptionPane.showInputDialog(mensaje));
     }
+    public float recibeFloat(String mensaje){
+        return Float.parseFloat(JOptionPane.showInputDialog(mensaje));
+    }
     public char recibeChar(String mensaje){
         return JOptionPane.showInputDialog(mensaje).toUpperCase().charAt(0);
     }
