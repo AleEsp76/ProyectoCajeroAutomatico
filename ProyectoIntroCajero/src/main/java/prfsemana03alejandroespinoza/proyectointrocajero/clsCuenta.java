@@ -85,6 +85,11 @@ public class clsCuenta {
     public void setMoneda(char Moneda) {
         this.Moneda = Moneda;
     }
+
+    @Override
+    public String toString() {
+        return  TipoCuenta + "\t" + NumeroCuenta + "\t" + NuneroTarjeta + "\t" + CVV + "\t" + FechaNacimiento + "\t" + Monto + "\t" + Moneda;
+    }
     
     
 }

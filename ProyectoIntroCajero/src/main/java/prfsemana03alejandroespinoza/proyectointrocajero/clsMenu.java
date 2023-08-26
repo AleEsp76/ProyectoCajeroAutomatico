@@ -23,7 +23,7 @@ public class clsMenu {
                     + "A. Generar lista administradores\n"
                     + "B. Agregar Administrador\n"
                     + "C. Modificar Administrador\n"
-                    + "D. Habilitar/Deshabilitar Administrador\n"
+                    + "D. Eliminar Administrador\n"
                     + "E. Listar Administradores\n"
                     + "F  Administrar Clientes\n"
                     + "S. Sair");
@@ -70,8 +70,9 @@ public class clsMenu {
                 case 'D':
                     if (posAdministrador == 0) {
                     clsH.imprimeMensaje("No existen administradores, agregue uno primero");
-                    } else { 
-                    administradores = clsAdmin.cambiarEstadoHabilitadoDeshabilitado(administradores, posAdministrador);
+                    } else {
+                    posAdministrador = clsAdmin.eliminarAdministrador(administradores, posAdministrador);
+                    //administradores = clsAdmin.cambiarEstadoHabilitadoDeshabilitado(administradores, posAdministrador);
                     }
                     break;
                 case 'E':

@@ -98,15 +98,18 @@ public class clsAdministrador {
         String Puesto = clsH.recibeString("Digite el puesto:");
         String Contrasenna = clsH.recibeString("Digite la contraseña:");
         String AnnoIngreso = clsH.recibeString("Digite el año de ingreso:");
-        char Habilitado = 'S';
+        char Habilitado = ' ';
+        do{
+            Habilitado = clsH.recibeChar("Digite si el administrador esta S - habilitado o N - desabilitado");
+        }while(Habilitado != 'S' && Habilitado != 'N');
         administradores[posAdministrador] = new clsAdministrador(Identificacion, Nombre, Puesto, Contrasenna, AnnoIngreso, Habilitado);
         posAdministrador++;
         return posAdministrador;
     }
 
-    public int obtenerPosAdministrador(clsAdministrador administradores[], int posAdministrador) {
+    public int obtenerPosAdministrador(clsAdministrador administradores[], int posAdministrador, String accion) {
         clsHelper clsH = new clsHelper();
-        String nombreBuscar = clsH.recibeString("Digite el nombre del administrador que desea modificar:");
+        String nombreBuscar = clsH.recibeString("Digite el nombre del administrador que desea"+accion+":");
         int posAdministradorBuscado = -1;
         for (int i = 0; i < posAdministrador; i++) {
             if (nombreBuscar.equalsIgnoreCase(administradores[i].getNombre())) {
@@ -119,11 +122,11 @@ public class clsAdministrador {
 
     public clsAdministrador[] modificarAdministrador(clsAdministrador administradores[], int posAdministrador) {
         clsHelper clsH = new clsHelper();
-        int pos = this.obtenerPosAdministrador(administradores, posAdministrador);
+        int pos = this.obtenerPosAdministrador(administradores, posAdministrador, "modificar");
         if (pos == -1) {
             clsH.imprimeMensaje("No se encontraron administradores con el nombre indicado, intente nuevamente");
         } else {
-            char opcion = 'S';
+            char opcion = ' ';
             do {
                 opcion = clsH.recibeChar("Seleccione el tipo de dato que desea modificar: "
                         + "\n A. Nombre"
@@ -157,6 +160,31 @@ public class clsAdministrador {
         return administradores;
     }
 
+    public int eliminarAdministrador(clsAdministrador administradores[],int posAdministrador){
+        clsHelper clsH = new clsHelper();
+        int pos = this.obtenerPosAdministrador(administradores, posAdministrador, "eliminar");
+        if (pos == -1) {
+            clsH.imprimeMensaje("No se encontraron vehiculos con la placa indicada, intente nuevamente");
+        } else {
+            for (int i = pos; i < posAdministrador-1; i++){
+                administradores[i] = administradores[i+1];
+            }
+            posAdministrador--;
+            administradores[posAdministrador] = null;
+            clsH.imprimeMensaje("El vehiculo ha sido eliminado de forma correcta");
+        }            
+        return posAdministrador;
+    }
+        
+    public void listarAdministradores(clsAdministrador administradores[], int posAdministrador) {
+        String impresion = "Identificacion\tNombre\tPuesto\tContraseña\tAño de Ingreso\tHabilitado\n";
+        clsHelper clsH = new clsHelper();
+        for (int i = 0; i < posAdministrador; i++) {
+            impresion += "\n" + administradores[i].toString() + "\n";
+        }
+        clsH.imprimeMensaje(new TextArea(impresion));
+    }
+/*
     public clsAdministrador[] cambiarEstadoHabilitadoDeshabilitado(clsAdministrador administradores[], int posAdministrador) {
         clsHelper clsH = new clsHelper();
         int pos = this.obtenerPosAdministrador(administradores, posAdministrador);
@@ -184,14 +212,5 @@ public class clsAdministrador {
         
         return administradores;
     }
-
-    public void listarAdministradores(clsAdministrador administradores[], int posAdministrador) {
-        String impresion = "Identificacion\tNombre\tPuesto\tContraseña\tAño de Ingreso\tHabilitado\n";
-        clsHelper clsH = new clsHelper();
-        for (int i = 0; i < posAdministrador; i++) {
-            impresion += "\n" + administradores[i].toString() + "\n";
-        }
-        clsH.imprimeMensaje(new TextArea(impresion));
-    }
-
+*/
 }
