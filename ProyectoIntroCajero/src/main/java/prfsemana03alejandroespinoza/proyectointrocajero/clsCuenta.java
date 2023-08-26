@@ -120,12 +120,12 @@ public class clsCuenta {
         return posCuenta;
     }
 
-    public int obtenerPosAdministrador(clsAdministrador administradores[], int posAdministrador, String accion) {
+    public int obtenerPosCuenta(clsCuenta cuentas[], int posCuenta, String accion) {
         clsHelper clsH = new clsHelper();
-        String nombreBuscar = clsH.recibeString("Digite el nombre del administrador que desea"+accion+":");
+        String nombreBuscar = clsH.recibeString("Digite el numero de la  cuenta que desea"+accion+":");
         int posAdministradorBuscado = -1;
-        for (int i = 0; i < posAdministrador; i++) {
-            if (nombreBuscar.equalsIgnoreCase(administradores[i].getNombre())) {
+        for (int i = 0; i < posCuenta; i++) {
+            if (nombreBuscar.equalsIgnoreCase(cuentas[i].getNumeroCuenta())) {
                 posAdministradorBuscado = i;
                 break;
             }
@@ -135,7 +135,7 @@ public class clsCuenta {
 
     public clsAdministrador[] modificarAdministrador(clsAdministrador administradores[], int posAdministrador) {
         clsHelper clsH = new clsHelper();
-        int pos = this.obtenerPosAdministrador(administradores, posAdministrador, "modificar");
+        int pos = this.obtenerPosCuenta(administradores, posAdministrador, "modificar");
         if (pos == -1) {
             clsH.imprimeMensaje("No se encontraron administradores con el nombre indicado, intente nuevamente");
         } else {
@@ -147,7 +147,6 @@ public class clsCuenta {
                         + "\n C. Contrasenna"
                         + "\n D. Anno de Ingreso"
                         + "\n S. Salir");
-
                 switch (opcion) {
                     case 'A':
                         administradores[pos].setNombre(clsH.recibeString("Digite el nuevo nombre completo del administrador:"));
@@ -173,8 +172,9 @@ public class clsCuenta {
         return administradores;
     }
 
-    public int eliminarAdministrador(clsAdministrador administradores[],int posAdministrador){
+    public int eliminarCuenta(clsAdministrador administradores[],int posAdministrador){
         clsHelper clsH = new clsHelper();
+        //Hola que tal 
         int pos = this.obtenerPosAdministrador(administradores, posAdministrador, "eliminar");
         if (pos == -1) {
             clsH.imprimeMensaje("No se encontraron vehiculos con la placa indicada, intente nuevamente");
