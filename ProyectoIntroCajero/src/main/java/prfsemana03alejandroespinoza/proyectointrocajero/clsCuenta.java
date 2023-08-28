@@ -11,6 +11,7 @@ import java.awt.TextArea;
  * @author aleja
  */
 public class clsCuenta {
+    private char activa; //A-activa , I -Inaticva
     private char TipoCuenta; //A-Ahorro, C-Corriente
     private String NumeroCuenta;
     private String NuneroTarjeta;
@@ -22,7 +23,7 @@ public class clsCuenta {
     public clsCuenta() {
     }
 
-    public clsCuenta(char TipoCuenta, String NumeroCuenta, String NuneroTarjeta, String CVV, String FechaNacimiento, float Monto, char Moneda) {
+    public clsCuenta(char TipoCuenta, String NumeroCuenta, String NuneroTarjeta, String CVV, String FechaNacimiento, float Monto, char Moneda, char activa) {
         this.TipoCuenta = TipoCuenta;
         this.NumeroCuenta = NumeroCuenta;
         this.NuneroTarjeta = NuneroTarjeta;
@@ -30,6 +31,7 @@ public class clsCuenta {
         this.FechaNacimiento = FechaNacimiento;
         this.Monto = Monto;
         this.Moneda = Moneda;
+        this.activa = activa;
     }
 
     public char getTipoCuenta() {
@@ -38,6 +40,10 @@ public class clsCuenta {
 
     public String getNumeroCuenta() {
         return NumeroCuenta;
+    }
+
+    public char getActiva() {
+        return activa;
     }
 
     public String getNuneroTarjeta() {
@@ -64,6 +70,10 @@ public class clsCuenta {
         this.TipoCuenta = TipoCuenta;
     }
 
+    public void setActiva(char activa) {
+        this.activa = activa;
+    }
+    
     public void setNumeroCuenta(String NumeroCuenta) {
         this.NumeroCuenta = NumeroCuenta;
     }
@@ -115,7 +125,12 @@ public class clsCuenta {
         do{
             TipoCuenta = clsH.recibeChar("Digite si el administrador esta S - habilitado o N - desabilitado");
         }while(TipoCuenta != 'S' && TipoCuenta != 'N');
-        cuentas[posCuenta] = new clsCuenta(TipoCuenta, NumeroCuenta, NumeroTarjeta, CVV, FechaNacimiento, Monto,Moneda);
+        
+         do{
+            activa = clsH.recibeChar("Digite si la cuenta esta A - Activa o I - Inativa");
+        }while(Moneda != 'S' && Moneda != 'N');
+        
+        cuentas[posCuenta] = new clsCuenta(TipoCuenta, NumeroCuenta, NumeroTarjeta, CVV, FechaNacimiento, Monto,Moneda,activa);
         posCuenta++;
         return posCuenta;
     }
@@ -148,6 +163,7 @@ public class clsCuenta {
                         + "\n D. Moneda"
                         + "\n E. CVV"
                         + "\n F. Tipo Cuenta"
+                        + "\n G. Activa,Inativa"
                         + "\n S. Salir");
                 switch (opcion) {
                     case 'A':
@@ -171,6 +187,11 @@ public class clsCuenta {
                         do{
                             cuentas[pos].setTipoCuenta(clsH.recibeChar("Digite el tipo de cuenta nuevo: A-Ahorro C-Corriente"));
                         }while(cuentas[pos].getTipoCuenta() != 'A' && cuentas[pos].getTipoCuenta() != 'C');
+                        
+                    case 'G':
+                        do{
+                            cuentas[pos].setActiva(clsH.recibeChar("Digite si la cuenta esta activa o inactiva"));
+                        }while(cuentas[pos].getActiva()!= 'A' && cuentas[pos].getActiva()!= 'I');
                         break;
                     case 'S':
                         clsH.imprimeMensaje("Los datos se han modificado exitosamente");
@@ -209,5 +230,15 @@ public class clsCuenta {
         }
         clsH.imprimeMensaje(new TextArea(impresion));
     }
+    
+    public void Tranferecnia(clsCuenta cuentas[], int posCuenta){
+    
+        
+    
+    
+    
+    }
+    
+    
     
 }
