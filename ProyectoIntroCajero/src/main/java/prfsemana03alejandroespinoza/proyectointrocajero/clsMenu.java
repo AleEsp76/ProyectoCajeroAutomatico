@@ -144,6 +144,10 @@ public class clsMenu {
     public void MenuAdministrarCuentas() {
         clsHelper clsH = new clsHelper();
         char opcion = 'R';
+        clsCuenta clsC = new clsCuenta();
+        clsCuenta cuentas[] = new clsCuenta[0];
+        int posCuenta = 0;
+        boolean listaCuenta = false;
         do {
             opcion = clsH.recibeChar("Seleccione una de las siguientes opciones:\n"
                     + "A. Generar lista cuentas\n"
@@ -154,19 +158,61 @@ public class clsMenu {
                     + "R. Regresar a Clientes");
             switch (opcion) {
                 case 'A':
-                    clsH.imprimeMensaje("Se genera una lista de clientes nueva");
+                    if (listaCuenta) {
+                        char nuevaLista = 'N';
+                        do {
+                            nuevaLista = clsH.recibeChar("¿Desea generar una nueva lista? \n S - Si \n N - No");
+                        } while (nuevaLista != 'S' && nuevaLista != 'N');
+                        if (nuevaLista == 'S') {
+                            cuentas = clsC.generarlistaCuenta();
+                            posCuenta = 0;
+                            listaCuenta = true;
+                        }
+                    } else {
+                        clsH.imprimeMensaje("Se genera una lista de administradores nueva");
+                        cuentas = clsC.generarlistaCuenta();
+                        clsH.imprimeMensaje("Lista de administradores generada");
+                        listaCuenta = true;
+                    }
                     break;
                 case 'B':
-                    clsH.imprimeMensaje("Se genera un cliente nuevo");
+                    if (listaCuenta) {
+                        if (posCuenta < cuentas.length) {
+                            posCuenta = clsC.agregarCuenta(cuentas, posCuenta);
+                            clsH.imprimeMensaje("El administrador ha sido agregado exitosamente");
+                        } else {
+                            clsH.imprimeMensaje("La lista de administradores se ha llenado");
+                        }
+                    } else {
+                        clsH.imprimeMensaje("Lista de administradores aun no ha sido generada generada");
+                    }
                     break;
                 case 'C':
-                    clsH.imprimeMensaje("Se modifica un cliente");
+                    if (posCuenta == 0) {
+                    clsH.imprimeMensaje("No existen administradores, agregue uno primero");
+                    } else {
+                    clsH.imprimeMensaje("Se modifica un administrador");
+                    cuentas = clsC.modificarCuenta(cuentas, posCuenta);
+                    }
                     break;
                 case 'D':
-                    clsH.imprimeMensaje("Se elimina un cliente");
+                    if (posCuenta == 0) {
+                    clsH.imprimeMensaje("No existen administradores, agregue uno primero");
+                    } else {
+                    posCuenta = clsC.eliminarCuenta(cuentas, posCuenta);
+                    //administradores = clsAdmin.cambiarEstadoHabilitadoDeshabilitado(administradores, posAdministrador);
+                    }
                     break;
                 case 'E':
-                    clsH.imprimeMensaje("Se listan los clientes");
+                    if (listaCuenta) {
+                        if (posCuenta == 0) {
+                            clsH.imprimeMensaje("No hay clientes para mostrar en la lista");
+                        } else {
+                            clsC.listarCuentas(cuentas, posCuenta);
+                        }
+                    } else {
+                        clsH.imprimeMensaje("Aun no se ha generado una lista");
+                    }
                     break;
                 case 'R':
                     break;

@@ -133,32 +133,44 @@ public class clsCuenta {
         return posAdministradorBuscado;
     }
 
-    public clsAdministrador[] modificarAdministrador(clsAdministrador administradores[], int posAdministrador) {
+    public clsCuenta[] modificarCuenta(clsCuenta cuentas[], int posCuenta) {
         clsHelper clsH = new clsHelper();
-        int pos = this.obtenerPosCuenta(administradores, posAdministrador, "modificar");
+        int pos = this.obtenerPosCuenta(cuentas, posCuenta, "modificar");
         if (pos == -1) {
-            clsH.imprimeMensaje("No se encontraron administradores con el nombre indicado, intente nuevamente");
+            clsH.imprimeMensaje("No se encontraron administradores con el numero de cuenta indicado, intente nuevamente");
         } else {
             char opcion = ' ';
             do {
                 opcion = clsH.recibeChar("Seleccione el tipo de dato que desea modificar: "
-                        + "\n A. Nombre"
-                        + "\n B. Puesto"
-                        + "\n C. Contrasenna"
-                        + "\n D. Anno de Ingreso"
+                        + "\n A. NumeroCuenta"
+                        + "\n B. FechaNacimiento"
+                        + "\n C. NumeroTarjeta"
+                        + "\n D. Moneda"
+                        + "\n E. CVV"
+                        + "\n F. Tipo Cuenta"
                         + "\n S. Salir");
                 switch (opcion) {
                     case 'A':
-                        administradores[pos].setNombre(clsH.recibeString("Digite el nuevo nombre completo del administrador:"));
+                        cuentas[pos].setNumeroCuenta(clsH.recibeString("Digite el nuevo numero de cuenta:"));
                         break;
                     case 'B':
-                        administradores[pos].setPuesto(clsH.recibeString("Digite el nuevo puesto del administrador:"));
+                        cuentas[pos].setFechaNacimiento(clsH.recibeString("Digite la nueva fecha de nacimeinto:"));
                         break;
                     case 'C':
-                        administradores[pos].setContrasenna(clsH.recibeString("Digite la nueva contrasenna del Administrador"));
+                        cuentas[pos].setNuneroTarjeta(clsH.recibeString("Digite el nuevo numero de tarjeta"));
                         break;
                     case 'D':
-                        administradores[pos].setAnnoIngreso(clsH.recibeString("Digite el nuevo anno de ingreso del Administrador"));
+                        do{
+                            cuentas[pos].setMoneda(clsH.recibeChar("Digite el tipo de moneda de la cuenta: C-Colones D-Dolares"));
+                        }while(cuentas[pos].getMoneda() != 'C' && cuentas[pos].getMoneda() != 'D');
+                        break;
+                    case 'E':
+                        cuentas[pos].setCVV(clsH.recibeString("Digite el nuevo CVV"));
+                        break;
+                    case 'F':
+                        do{
+                            cuentas[pos].setTipoCuenta(clsH.recibeChar("Digite el tipo de cuenta nuevo: A-Ahorro C-Corriente"));
+                        }while(cuentas[pos].getTipoCuenta() != 'A' && cuentas[pos].getTipoCuenta() != 'C');
                         break;
                     case 'S':
                         clsH.imprimeMensaje("Los datos se han modificado exitosamente");
@@ -169,31 +181,31 @@ public class clsCuenta {
 
             } while (opcion != 'S');
         }
-        return administradores;
+        return cuentas;
     }
 
-    public int eliminarCuenta(clsAdministrador administradores[],int posAdministrador){
+    public int eliminarCuenta(clsCuenta cuentas[],int posCuenta){
         clsHelper clsH = new clsHelper();
         //Hola que tal 
-        int pos = this.obtenerPosAdministrador(administradores, posAdministrador, "eliminar");
+        int pos = this.obtenerPosCuenta(cuentas, posCuenta, "eliminar");
         if (pos == -1) {
             clsH.imprimeMensaje("No se encontraron vehiculos con la placa indicada, intente nuevamente");
         } else {
-            for (int i = pos; i < posAdministrador-1; i++){
-                administradores[i] = administradores[i+1];
+            for (int i = pos; i < posCuenta-1; i++){
+                cuentas[i] = cuentas[i+1];
             }
-            posAdministrador--;
-            administradores[posAdministrador] = null;
+            posCuenta--;
+            cuentas[posCuenta] = null;
             clsH.imprimeMensaje("El vehiculo ha sido eliminado de forma correcta");
         }            
-        return posAdministrador;
+        return posCuenta;
     }
         
-    public void listarAdministradores(clsAdministrador administradores[], int posAdministrador) {
-        String impresion = "Identificacion\tNombre\tPuesto\tContraseña\tAño de Ingreso\tHabilitado\n";
+    public void listarCuentas(clsCuenta cuentas[], int posCuenta) {
+        String impresion = "TipoCuenta\tNumeroCuenta\tNumeroTarjeta\tCVV\tFechaNacimiento\tMonto\tMoneda\n";
         clsHelper clsH = new clsHelper();
-        for (int i = 0; i < posAdministrador; i++) {
-            impresion += "\n" + administradores[i].toString() + "\n";
+        for (int i = 0; i < posCuenta; i++) {
+            impresion += "\n" + cuentas[i].toString() + "\n";
         }
         clsH.imprimeMensaje(new TextArea(impresion));
     }
