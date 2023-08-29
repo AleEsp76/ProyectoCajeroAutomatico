@@ -228,9 +228,10 @@ public class clsMenu {
         clsHelper clsH = new clsHelper();
         char opcion = 'S';
         do {
-            opcion = clsH.recibeChar("Seleccione una de las siguientes opciones:\n"
+             opcion = clsH.recibeChar("Seleccione una de las siguientes opciones:\n"
                     + "A. Revisar Estado de Cuentas\n"
                     + "B. Hacer retiro de dinero\n"
+                    + "C. Hacer deposito de dinero\n"
                     + "S. Sair");
             switch (opcion) {
                 case 'A':
@@ -238,6 +239,10 @@ public class clsMenu {
                     break;
                 case 'B':
                     clsH.imprimeMensaje("Se procedera a hacer el retiro");
+                    break;
+                case 'C':
+                    clsCuenta cuenta=new clsCuenta();
+                    cuenta.Deposito(Main.cuentas);
                     break;
                 case 'S':
                     clsH.imprimeMensaje("Gracias por visitar el cajero");
