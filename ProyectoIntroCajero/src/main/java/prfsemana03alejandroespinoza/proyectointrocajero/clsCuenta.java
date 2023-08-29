@@ -232,10 +232,46 @@ public class clsCuenta {
     }
     
     public void Tranferecnia(clsCuenta cuentas[], int posCuenta){
-    
+        clsHelper clsH = new clsHelper();
+        int cuentaOrigen ;
+        int  cuentaDestino  ;
+        float montoAtrasferir;
         
-    
-    
+      
+        
+        cuentaOrigen = this.obtenerPosCuenta(cuentas, posCuenta, "Tranferir");
+        if (cuentaOrigen == -1) {
+            clsH.imprimeMensaje("No se encontro una cuenta con el numero indicado");
+        } else if (cuentas[cuentaOrigen].getActiva() == 'I') {
+             clsH.imprimeMensaje("La cuenta se encubtra inactiva, no puede tranferir");
+        } else{
+            cuentaDestino = this.obtenerPosCuenta(cuentas, posCuenta, "Tranferir 2");   
+            if (cuentaDestino == -1) {
+                clsH.imprimeMensaje("No se encontro una cuenta con el numero indicado");
+            }else if (cuentas[cuentaDestino].getActiva() == 'I'){
+                 clsH.imprimeMensaje("La cuenta se encubtra inactiva, no puede tranferir");
+            
+            } else{
+                if (cuentas[cuentaOrigen].getMoneda() != cuentas[cuentaOrigen].getMoneda()) {
+                    clsH.imprimeMensaje("Las cuentas tienen monedas diferentes, no puede tranferir");
+                
+                }else{
+                    do {                        
+                      montoAtrasferir = clsH.recibeFloat("Digite el monto que desea tranferir");  
+                    } while (montoAtrasferir <= cuentas[cuentaOrigen].getMonto());
+                    
+                    cuentas[cuentaOrigen].setMonto(cuentas[cuentaOrigen].getMonto()-montoAtrasferir);
+                    
+                    cuentas[cuentaDestino].setMonto(cuentas[cuentaDestino].getMonto()+ montoAtrasferir);
+                    clsH.imprimeMensaje("Transferencia realizada con éxito.\n");
+                    
+                        }
+            
+            
+            }
+            
+        }  
+                
     
     }
     
