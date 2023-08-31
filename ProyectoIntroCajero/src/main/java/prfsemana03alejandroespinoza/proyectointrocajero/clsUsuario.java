@@ -28,6 +28,8 @@ public class clsUsuario {
         this.Residencia = Residencia;
         this.Correo = Correo;
         this.NumeroTelefono = NumeroTelefono;
+        listaCuentas = new clsCuenta[5]; 
+         NumeroCuentas = 0;
     }
 
     public clsUsuario() {

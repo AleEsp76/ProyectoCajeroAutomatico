@@ -19,6 +19,7 @@ public class clsCuenta {
     private String FechaNacimiento;
     float Monto;
     char Moneda;//C-Colones, D-Dolares
+    
 
     public clsCuenta() {
     }
@@ -100,36 +101,38 @@ public class clsCuenta {
 
     @Override
     public String toString() {
-        return TipoCuenta + "\n" + NumeroCuenta + "\n" + NuneroTarjeta + "\n" + CVV + "\n" + FechaNacimiento + "\n" + Monto + "\n" + Moneda;
+        return TipoCuenta + "\t" + NumeroCuenta + "\t" + NuneroTarjeta + "\t" + CVV + "\t" + FechaNacimiento + "\t" + Monto + "\t" + Moneda;
     }
     
     public clsCuenta[] generarlistaCuenta() {
         clsHelper clsH = new clsHelper();
-        int tamano = clsH.recibeInt("Digite la cantidad de administradores que desea almacenar");
+        int tamano = clsH.recibeInt("Digite la cantidad de cuentas que desea almacenar");
         Main.cuentas = new clsCuenta[tamano];
         return Main.cuentas;
     }
 
     public int agregarCuenta(clsCuenta cuentas[], int posCuenta) {
         clsHelper clsH = new clsHelper();
-        String NumeroCuenta = clsH.recibeString("Digite la identifacion:");
-        String NumeroTarjeta = clsH.recibeString("Digite el nombre completo:");
-        String CVV = clsH.recibeString("Digite el puesto:");
-        String FechaNacimiento = clsH.recibeString("Digite la contraseña:");
-        float Monto = clsH.recibeFloat("Digite el año de ingreso:");
+        String NumeroCuenta = clsH.recibeString("Digite el numero de cuenta:");
+        String NumeroTarjeta = clsH.recibeString("Digite el numero de la tarjeta:");
+        String CVV = clsH.recibeString("Digite el CVV de la tarjeta:");
+        String FechaNacimiento = clsH.recibeString("Digite la fecha de vencimiento de la tarjeta:");
+        float Monto = clsH.recibeFloat("Digite el monto:");
         char Moneda = ' ';
         do{
-            Moneda = clsH.recibeChar("Digite si el administrador esta S - habilitado o N - desabilitado");
-        }while(Moneda != 'S' && Moneda != 'N');
+            Moneda = clsH.recibeChar("Digite la moneda (C- Colones \n D- Dolares)");
+        }while(Moneda != 'C' && Moneda != 'D');
         char TipoCuenta = ' ';
         do{
-            TipoCuenta = clsH.recibeChar("Digite si el administrador esta S - habilitado o N - desabilitado");
-        }while(TipoCuenta != 'S' && TipoCuenta != 'N');
+            TipoCuenta = clsH.recibeChar("Digite el tipo de cuenta (C- Corriente \n A- Ahorros)");
+        }while(TipoCuenta != 'C' && TipoCuenta != 'A');
         
-         do{
-            activa = clsH.recibeChar("Digite si la cuenta esta A - Activa o I - Inativa");
-        }while(Moneda != 'S' && Moneda != 'N');
+         do {
+    activa = clsH.recibeChar("Digite si la cuenta está activa (A) o inactiva (I)");
+} while (activa != 'A' && activa != 'I');
         
+         
+         
         cuentas[posCuenta] = new clsCuenta(TipoCuenta, NumeroCuenta, NumeroTarjeta, CVV, FechaNacimiento, Monto,Moneda,activa);
         posCuenta++;
         return posCuenta;
@@ -152,7 +155,7 @@ public class clsCuenta {
         clsHelper clsH = new clsHelper();
         int pos = this.obtenerPosCuenta(cuentas, posCuenta, "modificar");
         if (pos == -1) {
-            clsH.imprimeMensaje("No se encontraron administradores con el numero de cuenta indicado, intente nuevamente");
+            clsH.imprimeMensaje("No se encontraron clientes con el numero de cuenta indicado, intente nuevamente");
         } else {
             char opcion = ' ';
             do {
@@ -207,17 +210,17 @@ public class clsCuenta {
 
     public int eliminarCuenta(clsCuenta cuentas[],int posCuenta){
         clsHelper clsH = new clsHelper();
-        //Hola que tal 
+        
         int pos = this.obtenerPosCuenta(cuentas, posCuenta, "eliminar");
         if (pos == -1) {
-            clsH.imprimeMensaje("No se encontraron vehiculos con la placa indicada, intente nuevamente");
+            clsH.imprimeMensaje("No se encontraron cuentas con el numero indicado, intente nuevamente");
         } else {
             for (int i = pos; i < posCuenta-1; i++){
                 cuentas[i] = cuentas[i+1];
             }
             posCuenta--;
             cuentas[posCuenta] = null;
-            clsH.imprimeMensaje("El vehiculo ha sido eliminado de forma correcta");
+            clsH.imprimeMensaje("La cuenta ha sido eliminada de forma correcta");
         }            
         return posCuenta;
     }
@@ -231,7 +234,7 @@ public class clsCuenta {
         clsH.imprimeMensaje(new TextArea(impresion));
     }
     
-    public void Tranferecnia(clsCuenta cuentas[], int posCuenta){
+    public void Tranferencia(clsCuenta cuentas[], int posCuenta){
         clsHelper clsH = new clsHelper();
         int cuentaOrigen ;
         int  cuentaDestino  ;
@@ -249,7 +252,7 @@ public class clsCuenta {
             if (cuentaDestino == -1) {
                 clsH.imprimeMensaje("No se encontro una cuenta con el numero indicado");
             }else if (cuentas[cuentaDestino].getActiva() == 'I'){
-                 clsH.imprimeMensaje("La cuenta se encubtra inactiva, no puede tranferir");
+                 clsH.imprimeMensaje("La cuenta se encuentra inactiva, no puede tranferir");
             
             } else{
                 if (cuentas[cuentaOrigen].getMoneda() != cuentas[cuentaOrigen].getMoneda()) {
