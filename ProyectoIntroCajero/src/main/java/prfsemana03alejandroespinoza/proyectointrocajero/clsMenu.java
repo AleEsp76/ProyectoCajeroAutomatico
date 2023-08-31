@@ -137,14 +137,14 @@ public class clsMenu {
                     break;
                 case 'D':
                     clsH.imprimeMensaje("Se eliminara un cliente");
-                    //clsCl.eliminarCliente(clientes, poscCliente);
+                    clsCl.eliminarCliente(clientes, poscCliente);
                     break;
                 case 'E':
                     clsH.imprimeMensaje("Se listan los clientes en la base de datos");
-                    //clsCl.listarclientes(clientes, poscCliente);
+                    clsCl.listarclientes(clientes, poscCliente);
                     break;
                 case 'F':
-                    //int poscusuario = clsCl.buscarposccliente(clientes, poscCliente);
+                    int poscusuario = clsCl.buscarposccliente(clientes, poscCliente);
                     if (poscusuario == -1){
                         clsH.imprimeMensaje("No se encontraron coincidencias");
                     }else{
