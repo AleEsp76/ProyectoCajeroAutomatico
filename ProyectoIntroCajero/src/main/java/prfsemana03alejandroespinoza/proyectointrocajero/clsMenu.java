@@ -112,7 +112,7 @@ public class clsMenu {
                     + "A. Generar lista clientes\n"
                     + "B. Agregar Clientes\n"
                     + "C. Modificar Cliente\n"
-                    + "D. Elimintar Cliente\n"
+                    + "D. Eliminar Cliente\n"
                     + "E. Listar Clientes\n"
                     + "F  Administrar Cuentas\n"
                     + "R. Regresar a Administrador");

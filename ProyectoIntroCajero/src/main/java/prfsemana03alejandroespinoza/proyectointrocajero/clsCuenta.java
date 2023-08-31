@@ -14,9 +14,9 @@ public class clsCuenta {
     private char activa; //A-activa , I -Inaticva
     private char TipoCuenta; //A-Ahorro, C-Corriente
     private String NumeroCuenta;
-    private String NuneroTarjeta;
+    private String NumeroTarjeta;
     private String CVV;
-    private String FechaNacimiento;
+    private String FechaVencimiento;
     float Monto;
     char Moneda;//C-Colones, D-Dolares
     
@@ -27,9 +27,9 @@ public class clsCuenta {
     public clsCuenta(char TipoCuenta, String NumeroCuenta, String NuneroTarjeta, String CVV, String FechaNacimiento, float Monto, char Moneda, char activa) {
         this.TipoCuenta = TipoCuenta;
         this.NumeroCuenta = NumeroCuenta;
-        this.NuneroTarjeta = NuneroTarjeta;
+        this.NumeroTarjeta = NuneroTarjeta;
         this.CVV = CVV;
-        this.FechaNacimiento = FechaNacimiento;
+        this.FechaVencimiento = FechaNacimiento;
         this.Monto = Monto;
         this.Moneda = Moneda;
         this.activa = activa;
@@ -47,8 +47,8 @@ public class clsCuenta {
         return activa;
     }
 
-    public String getNuneroTarjeta() {
-        return NuneroTarjeta;
+    public String getNumeroTarjeta() {
+        return NumeroTarjeta;
     }
 
     public String getCVV() {
@@ -56,7 +56,7 @@ public class clsCuenta {
     }
 
     public String getFechaNacimiento() {
-        return FechaNacimiento;
+        return FechaVencimiento;
     }
 
     public float getMonto() {
@@ -79,16 +79,16 @@ public class clsCuenta {
         this.NumeroCuenta = NumeroCuenta;
     }
 
-    public void setNuneroTarjeta(String NuneroTarjeta) {
-        this.NuneroTarjeta = NuneroTarjeta;
+    public void setNumeroTarjeta(String NumeroTarjeta) {
+        this.NumeroTarjeta = NumeroTarjeta;
     }
 
     public void setCVV(String CVV) {
         this.CVV = CVV;
     }
 
-    public void setFechaNacimiento(String FechaNacimiento) {
-        this.FechaNacimiento = FechaNacimiento;
+    public void setFechaVencimiento(String FechaNacimiento) {
+        this.FechaVencimiento = FechaNacimiento;
     }
 
     public void setMonto(float Monto) {
@@ -101,7 +101,7 @@ public class clsCuenta {
 
     @Override
     public String toString() {
-        return TipoCuenta + "\t" + NumeroCuenta + "\t" + NuneroTarjeta + "\t" + CVV + "\t" + FechaNacimiento + "\t" + Monto + "\t" + Moneda;
+        return TipoCuenta + "\t" + NumeroCuenta + "\t" + NumeroTarjeta + "\t" + CVV + "\t" + FechaVencimiento + "\t" + Monto + "\t" + Moneda;
     }
     
     public clsCuenta[] generarlistaCuenta() {
@@ -173,10 +173,10 @@ public class clsCuenta {
                         cuentas[pos].setNumeroCuenta(clsH.recibeString("Digite el nuevo numero de cuenta:"));
                         break;
                     case 'B':
-                        cuentas[pos].setFechaNacimiento(clsH.recibeString("Digite la nueva fecha de nacimeinto:"));
+                        cuentas[pos].setFechaVencimiento(clsH.recibeString("Digite la nueva fecha de nacimeinto:"));
                         break;
                     case 'C':
-                        cuentas[pos].setNuneroTarjeta(clsH.recibeString("Digite el nuevo numero de tarjeta"));
+                        cuentas[pos].setNumeroTarjeta(clsH.recibeString("Digite el nuevo numero de tarjeta"));
                         break;
                     case 'D':
                         do{
