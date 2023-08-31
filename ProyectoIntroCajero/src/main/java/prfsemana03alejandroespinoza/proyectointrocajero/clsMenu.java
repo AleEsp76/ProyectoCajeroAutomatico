@@ -102,6 +102,10 @@ public class clsMenu {
 
     public void MenuAdministrarClientes() {
         clsHelper clsH = new clsHelper();
+        clsUsuario clsCl = new clsUsuario();
+        clsUsuario clientes[] = new clsUsuario[0];
+        int poscCliente = 0;
+        boolean listacliente = false;
         char opcion = 'R';
         do {
             opcion = clsH.recibeChar("Seleccione una de las siguientes opciones:\n"
@@ -115,21 +119,38 @@ public class clsMenu {
             switch (opcion) {
                 case 'A':
                     clsH.imprimeMensaje("Se genera una lista de clientes nueva");
+                    clientes = clsCl.generarListaClientes();
+                    listacliente = true;
                     break;
                 case 'B':
-                    clsH.imprimeMensaje("Se genera un cliente nuevo");
+                    if (listacliente){
+                        poscCliente = clsCl.agregarcliente(clientes, poscCliente);
+                    }
                     break;
-                case 'C':
+                case 'C':                   
                     clsH.imprimeMensaje("Se modifica un cliente");
+                    if (poscCliente == 0) {
+                    clsH.imprimeMensaje("No hay clientes añadidos, por favor agregue uno primero");
+                    } else {
+                        clsCl.modificarCliente(clientes, poscCliente);
+                    }
                     break;
                 case 'D':
-                    clsH.imprimeMensaje("Se elimina un cliente");
+                    clsH.imprimeMensaje("Se eliminara un cliente");
+                    //clsCl.eliminarCliente(clientes, poscCliente);
                     break;
                 case 'E':
-                    clsH.imprimeMensaje("Se listan los clientes");
+                    clsH.imprimeMensaje("Se listan los clientes en la base de datos");
+                    //clsCl.listarclientes(clientes, poscCliente);
                     break;
                 case 'F':
-                    this.MenuAdministrarCuentas();
+                    //int poscusuario = clsCl.buscarposccliente(clientes, poscCliente);
+                    if (poscusuario == -1){
+                        clsH.imprimeMensaje("No se encontraron coincidencias");
+                    }else{
+                        //clientes[poscusuario]= this.MenuAdministrarCuentas(infoCuentas[]);
+                        }
+                    //this.MenuAdministrarCuentas();
                     break;
                 case 'R':
                     break;
@@ -138,7 +159,6 @@ public class clsMenu {
                     break;
             }
         } while (opcion != 'R');
-
     }
 
     public void MenuAdministrarCuentas() {
