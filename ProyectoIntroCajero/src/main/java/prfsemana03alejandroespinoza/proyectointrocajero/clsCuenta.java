@@ -296,6 +296,25 @@ public class clsCuenta {
         }
     }
     
-    
+    public void extraccion(clsCuenta cuentas[]) {
+        clsHelper clsH = new clsHelper();
+        String numCuenta = clsH.recibeString("Digite el numero de cuenta");
+        int pos = -1;
+        for (int i = 0; i < cuentas.length; i++) {
+            if (cuentas[i] != null) {
+                if (cuentas[i].NumeroCuenta.equalsIgnoreCase(numCuenta)) {
+                    pos = i;
+                }
+            }
+        }
+        if (pos == -1) {
+            clsH.imprimeMensaje("No se encontraron cuentas coincidentes");
+        } else {
+            float monto = clsH.recibeFloat("Digite el monto a depositar");
+            cuentas[pos].Monto -= monto;
+            clsH.imprimeMensaje("Deposito realizado correctamente");
+            clsH.imprimeMensaje(cuentas[pos].toString()); 
+        }
+    }
     
 }
