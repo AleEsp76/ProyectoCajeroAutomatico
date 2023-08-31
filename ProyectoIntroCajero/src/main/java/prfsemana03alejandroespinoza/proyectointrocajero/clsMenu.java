@@ -61,18 +61,18 @@ public class clsMenu {
                     break;
                 case 'C':
                     if (posAdministrador == 0) {
-                    clsH.imprimeMensaje("No existen administradores, agregue uno primero");
+                        clsH.imprimeMensaje("No existen administradores, agregue uno primero");
                     } else {
-                    clsH.imprimeMensaje("Se modifica un administrador");
-                    administradores = clsAdmin.modificarAdministrador(administradores, posAdministrador);
+                        clsH.imprimeMensaje("Se modifica un administrador");
+                        administradores = clsAdmin.modificarAdministrador(administradores, posAdministrador);
                     }
                     break;
                 case 'D':
                     if (posAdministrador == 0) {
-                    clsH.imprimeMensaje("No existen administradores, agregue uno primero");
+                        clsH.imprimeMensaje("No existen administradores, agregue uno primero");
                     } else {
-                    posAdministrador = clsAdmin.eliminarAdministrador(administradores, posAdministrador);
-                    //administradores = clsAdmin.cambiarEstadoHabilitadoDeshabilitado(administradores, posAdministrador);
+                        posAdministrador = clsAdmin.eliminarAdministrador(administradores, posAdministrador);
+                        //administradores = clsAdmin.cambiarEstadoHabilitadoDeshabilitado(administradores, posAdministrador);
                     }
                     break;
                 case 'E':
@@ -123,14 +123,14 @@ public class clsMenu {
                     listacliente = true;
                     break;
                 case 'B':
-                    if (listacliente){
+                    if (listacliente) {
                         poscCliente = clsCl.agregarcliente(clientes, poscCliente);
                     }
                     break;
-                case 'C':                   
+                case 'C':
                     clsH.imprimeMensaje("Se modifica un cliente");
                     if (poscCliente == 0) {
-                    clsH.imprimeMensaje("No hay clientes añadidos, por favor agregue uno primero");
+                        clsH.imprimeMensaje("No hay clientes añadidos, por favor agregue uno primero");
                     } else {
                         clsCl.modificarCliente(clientes, poscCliente);
                     }
@@ -144,14 +144,16 @@ public class clsMenu {
                     clsCl.listarclientes(clientes, poscCliente);
                     break;
                 case 'F':
-                    int poscusuario = clsCl.buscarposccliente(clientes, poscCliente);
-                    if (poscusuario == -1){
-                        clsH.imprimeMensaje("No se encontraron coincidencias");
-                    }else{
-                        //clientes[poscusuario]= this.MenuAdministrarCuentas(infoCuentas[]);
-                        }
-                    //this.MenuAdministrarCuentas();
-                    break;
+                   int posc = clsCl.buscarposccliente(clientes, poscCliente);
+    if (posc == -1) {
+        clsH.imprimeMensaje("No se encontraron coincidencias");
+    } else {
+        
+        MenuAdministrarCuentas();
+        clsH.imprimeMensaje("Los datos de sus cuentas fueron modificados correctamente");
+    }
+    break;
+
                 case 'R':
                     break;
                 default:
@@ -189,9 +191,9 @@ public class clsMenu {
                             listaCuenta = true;
                         }
                     } else {
-                        clsH.imprimeMensaje("Se genera una lista de administradores nueva");
+                        clsH.imprimeMensaje("Se genera una lista de cuentas nueva");
                         cuentas = clsC.generarlistaCuenta();
-                        clsH.imprimeMensaje("Lista de administradores generada");
+                        clsH.imprimeMensaje("Lista de cuentas generada");
                         listaCuenta = true;
                     }
                     break;
@@ -199,34 +201,34 @@ public class clsMenu {
                     if (listaCuenta) {
                         if (posCuenta < cuentas.length) {
                             posCuenta = clsC.agregarCuenta(cuentas, posCuenta);
-                            clsH.imprimeMensaje("El administrador ha sido agregado exitosamente");
+                            clsH.imprimeMensaje("La cuenta ha sido agregado exitosamente");
                         } else {
-                            clsH.imprimeMensaje("La lista de administradores se ha llenado");
+                            clsH.imprimeMensaje("La lista de cuentas para este usuario se ha llenado");
                         }
                     } else {
-                        clsH.imprimeMensaje("Lista de administradores aun no ha sido generada generada");
+                        clsH.imprimeMensaje("Lista de cuentas aun no ha sido generada generada");
                     }
                     break;
                 case 'C':
                     if (posCuenta == 0) {
-                    clsH.imprimeMensaje("No existen administradores, agregue uno primero");
+                        clsH.imprimeMensaje("No existen cuentas, agregue una primero");
                     } else {
-                    clsH.imprimeMensaje("Se modifica un administrador");
-                    cuentas = clsC.modificarCuenta(cuentas, posCuenta);
+                        clsH.imprimeMensaje("Se modifica una cuenta");
+                        cuentas = clsC.modificarCuenta(cuentas, posCuenta);
                     }
                     break;
                 case 'D':
                     if (posCuenta == 0) {
-                    clsH.imprimeMensaje("No existen administradores, agregue uno primero");
+                        clsH.imprimeMensaje("No existen cuentas, agregue una primero");
                     } else {
-                    posCuenta = clsC.eliminarCuenta(cuentas, posCuenta);
-                    //administradores = clsAdmin.cambiarEstadoHabilitadoDeshabilitado(administradores, posAdministrador);
+                        posCuenta = clsC.eliminarCuenta(cuentas, posCuenta);
+                        
                     }
                     break;
                 case 'E':
                     if (listaCuenta) {
                         if (posCuenta == 0) {
-                            clsH.imprimeMensaje("No hay clientes para mostrar en la lista");
+                            clsH.imprimeMensaje("No hay cuentas para mostrar en la lista");
                         } else {
                             clsC.listarCuentas(cuentas, posCuenta);
                         }
@@ -248,7 +250,7 @@ public class clsMenu {
         clsHelper clsH = new clsHelper();
         char opcion = 'S';
         do {
-             opcion = clsH.recibeChar("Seleccione una de las siguientes opciones:\n"
+            opcion = clsH.recibeChar("Seleccione una de las siguientes opciones:\n"
                     + "A. Revisar Estado de Cuentas\n"
                     + "B. Hacer retiro de dinero\n"
                     + "C. Hacer deposito de dinero\n"
@@ -261,7 +263,7 @@ public class clsMenu {
                     clsH.imprimeMensaje("Se procedera a hacer el retiro");
                     break;
                 case 'C':
-                    clsCuenta cuenta=new clsCuenta();
+                    clsCuenta cuenta = new clsCuenta();
                     cuenta.Deposito(Main.cuentas);
                     break;
                 case 'S':
