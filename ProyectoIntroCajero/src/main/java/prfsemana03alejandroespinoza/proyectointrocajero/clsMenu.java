@@ -166,8 +166,8 @@ public class clsMenu {
     public void MenuAdministrarCuentas() {
         clsHelper clsH = new clsHelper();
         char opcion = 'R';
-        clsCuenta clsC = new clsCuenta();
-        clsCuenta cuentas[] = new clsCuenta[0];
+        clsCuentas clsC = new clsCuentas();
+        clsCuentas cuentas[] = new clsCuentas[0];
         int posCuenta = 0;
         boolean listaCuenta = false;
         do {
@@ -263,7 +263,7 @@ public class clsMenu {
                     clsH.imprimeMensaje("Se procedera a hacer el retiro");
                     break;
                 case 'C':
-                    clsCuenta cuenta = new clsCuenta();
+                    clsCuentas cuenta = new clsCuentas();
                     cuenta.Deposito(Main.cuentas);
                     break;
                 case 'S':
