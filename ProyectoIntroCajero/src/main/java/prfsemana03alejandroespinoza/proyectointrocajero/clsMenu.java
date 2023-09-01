@@ -49,7 +49,7 @@ public class clsMenu {
                     clsH.imprimeMensaje("Se agrega un administrador");
                     if (listaAdministradores) {
                         if (posAdministrador < administradores.length){
-                            posAdministrador = clsAdmin.agregarCliente(administradores, posAdministrador);
+                            posAdministrador = clsAdmin.agregarAdministrador(administradores, posAdministrador);
                             clsH.imprimeMensaje("El cliente ha sido agregado satifactriamente");
                         }else{
                             clsH.imprimeMensaje("La lista de administradores se ha llenado");

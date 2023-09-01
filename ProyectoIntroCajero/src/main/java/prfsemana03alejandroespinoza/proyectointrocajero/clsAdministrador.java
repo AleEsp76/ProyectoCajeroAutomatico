@@ -90,18 +90,7 @@ public class clsAdministrador {
         return administradores;
     }
     
-    public int agregarCliente(clsAdministrador administradores[], int posAdministrador){
-        clsHelper clsH = new clsHelper();
-        String Identificacion = clsH.recibeString("Digite la identifacion:");
-        String Nombre = clsH.recibeString("Digite el nombre completo:");
-        String Puesto = clsH.recibeString("Digite el puesto:");
-        String Contrasenna = clsH.recibeString("Digite la contraseña:");
-        String AnnoIngreso = clsH.recibeString("Digite el año de ingreso:");
-        char Habilitado = 'H';
-        administradores[posAdministrador]= new clsAdministrador(Identificacion, Nombre, Puesto, Contrasenna, AnnoIngreso, Habilitado);
-        posAdministrador++;
-        return posAdministrador;
-    }
+   
     
     public int obtenerPosAdministrador(clsAdministrador administradores[], int posAdministrador, String accion) {
         clsHelper clsH = new clsHelper();
