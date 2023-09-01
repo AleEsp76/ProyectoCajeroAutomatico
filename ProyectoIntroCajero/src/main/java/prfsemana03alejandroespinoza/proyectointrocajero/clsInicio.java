@@ -447,4 +447,94 @@ public class clsInicio {
             }
         } while (opcion != 'R');
     }
+    
+    public clsCliente MenuAdministrarCuentas(clsCliente cliente) {
+        clsHelper clsH = new clsHelper();
+        clsCuentas clsC = new clsCuentas();
+        clsCuentas cuentas[] = cliente.getListaCuentas();
+        int posCuenta =   cliente.getCantidadCuentas();
+        
+        char opcion = ' ';
+        do {
+            opcion = clsH.recibeChar("Seleccione una de las siguientes opciones:\n"
+                    + "A. Generar lista cuentas\n"
+                    + "B. Agregar Cuenta\n"
+                    + "C. Modificar Cuenta\n"
+                    + "D. Elimintar Cuenta\n"
+                    + "E. Listar Cuentas\n"
+                    + "R. Regresar a Clientes");
+            
+            switch (opcion) {
+                case 'A':
+                    if (posCuenta >= 0) {
+                        char nuevaLista = 'N';
+                        do {
+                            nuevaLista = clsH.recibeChar("¿Desea generar una nueva lista? \n S - Si \n N - No");
+                        } while (nuevaLista != 'S' && nuevaLista != 'N');
+                        if (nuevaLista == 'S') {
+                            cuentas = clsC.generarlistaCuenta();
+                            posCuenta = 0;
+                        }
+                    } else {
+                        clsH.imprimeMensaje("Se genera una lista de cuentas nueva");
+                        cuentas = clsC.generarlistaCuenta();
+                        posCuenta = 0;
+                    }
+                    break;
+                    
+                case 'B':
+                    if (posCuenta != -1) {
+                        if (posCuenta < cuentas.length) {
+                            posCuenta = clsC.agregarCuenta(cuentas, posCuenta);
+                            clsH.imprimeMensaje("La cuenta ha sido agregado exitosamente");
+                        } else {
+                            clsH.imprimeMensaje("La lista de cuentas para este usuario se ha llenado");
+                        }
+                    } else {
+                        clsH.imprimeMensaje("Lista de cuentas aun no ha sido generada generada");
+                    }
+                    break;
+                    
+                case 'C':
+                    if (posCuenta < 1) {
+                        clsH.imprimeMensaje("No existen cuentas, agregue una primero");
+                    } else {
+                        clsH.imprimeMensaje("Se modifica una cuenta");
+                        cuentas = clsC.modificarCuenta(cuentas, posCuenta);
+                    }
+                    break;
+                    
+                case 'D':
+                    if (posCuenta < 1) {
+                        clsH.imprimeMensaje("No existen cuentas, agregue una primero");
+                    } else {
+                        posCuenta = clsC.eliminarCuenta(cuentas, posCuenta);
+                        
+                    }
+                    break;
+                    
+                case 'E':
+                    if (posCuenta != -1) {
+                        if (posCuenta < 1) {
+                            clsH.imprimeMensaje("No hay cuentas para mostrar en la lista");
+                        } else {
+                            clsC.listarCuentas(cuentas, posCuenta);
+                        }
+                    } else {
+                        clsH.imprimeMensaje("Aun no se ha generado una lista");
+                    }
+                    break;
+                    
+                case 'R':
+                    break;
+                    
+                default:
+                    clsH.imprimeMensaje("La opcion no es valida");
+                    break;
+            }
+        } while (opcion != 'R');
+        cliente.setCantidadCuentas(posCuenta);
+        cliente.setListaCuentas(cuentas);
+        return cliente;
+    }
 }
