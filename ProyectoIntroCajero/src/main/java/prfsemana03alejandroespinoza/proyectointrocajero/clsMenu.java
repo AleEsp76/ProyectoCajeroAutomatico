@@ -102,8 +102,8 @@ public class clsMenu {
 
     public void MenuAdministrarClientes() {
         clsHelper clsH = new clsHelper();
-        clsUsuario clsCl = new clsUsuario();
-        clsUsuario clientes[] = new clsUsuario[0];
+        clsCliente clsCl = new clsCliente();
+        clsCliente clientes[] = new clsCliente[0];
         int poscCliente = 0;
         boolean listacliente = false;
         char opcion = 'R';
