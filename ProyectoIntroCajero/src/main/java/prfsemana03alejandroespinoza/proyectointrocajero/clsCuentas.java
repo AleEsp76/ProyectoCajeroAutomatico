@@ -385,7 +385,7 @@ public class clsCuentas {
         } else {
             
             int monto = cantidad_ingresar;
-            cliente.getListaCuentas()[pos].Monto += monto;
+            cliente.getListaCuentas()[pos].setMonto(cliente.getListaCuentas()[pos].getMonto()+monto);
             dineroMaquina -= monto;
             clsH.imprimeMensaje("Deposito realizado correctamente");
             voucher("Extraccion clsH.imprimeMensaje(new TextArea(impresion));", monto);
@@ -408,7 +408,7 @@ public class clsCuentas {
             clsH.imprimeMensaje("No se encontraron cuentas coincidentes");
         } else {
             int monto = cantidad_extraer;
-            cliente.getListaCuentas()[pos].Monto -= monto;
+            cliente.getListaCuentas()[pos].setMonto(cliente.getListaCuentas()[pos].getMonto()- monto);
             dineroMaquina += monto;
             clsH.imprimeMensaje("Extraccion realizada correctamente");
             voucher("Deposito ", monto);

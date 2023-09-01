@@ -13,8 +13,6 @@ public class Main {
     public static clsCuentas[] cuentas;
     public static void main(String[] args) {
         System.out.println("Bienvenido!.");
-        //cuentas=new clsCuentas[2];
-        //cuentas[0]=new clsCuentas('A', "123456789", "987654321", "1234", "28/08/2023",0, 'C', 'A');
         clsInicio clsI = new clsInicio();
         clsI.Verificar();
     }
