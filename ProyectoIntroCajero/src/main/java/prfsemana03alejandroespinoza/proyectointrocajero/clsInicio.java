@@ -338,4 +338,113 @@ public class clsInicio {
             
         }while(opcion != 'S');
     }
+    
+    public void MenuAdministrarClientes() {
+        clsHelper clsH = new clsHelper();
+        char opcion = ' ';
+        do {
+            opcion = clsH.recibeChar("Seleccione una de las siguientes opciones:\n"
+                    + "A. Generar lista clientes\n"
+                    + "B. Agregar Clientes\n"
+                    + "C. Modificar Cliente\n"
+                    + "D. Eliminar Cliente\n"
+                    + "E. Listar Clientes\n"
+                    + "F  Administrar Cuentas\n"
+                    + "G. Buscar Cliente\n"
+                    + "R. Regresar a Administrador");
+            
+            switch (opcion) {
+                case 'A':
+                    if (listacliente) {
+                        char nuevaLista = ' ';
+                        do {
+                            nuevaLista = clsH.recibeChar("¿Desea generar una nueva lista? \n S - Si \n N - No");
+                        } while (nuevaLista != 'S' && nuevaLista != 'N');
+                        if (nuevaLista == 'S') {
+                            clientes = clsCl.generarListaClientes();
+                            posAdministrador = 0;
+                            listaAdministradores = true;
+                        }
+                    } else {
+                        clsH.imprimeMensaje("Se genera una lista de clientes nueva");
+                        clientes = clsCl.generarListaClientes();
+                        clsH.imprimeMensaje("Lista de clientes generada");
+                        listacliente = true;
+                    }
+                    break;
+                    
+                    
+                case 'B':
+                    clsH.imprimeMensaje("Se agrega un cliente");
+                    if (listacliente) {
+                        if (poscCliente < clientes.length) {
+                            poscCliente = clsCl.agregarcliente(clientes, poscCliente);
+                            clsH.imprimeMensaje("El cliente ha sido agregado exitosamente");
+                        } else {
+                            clsH.imprimeMensaje("La lista de cliente se ha llenado");
+                        }
+                    } else {
+                        clsH.imprimeMensaje("Lista de clientes aun no ha sido generada generada");
+                    }
+                    break;
+                    
+                    
+                case 'C':
+                    clsH.imprimeMensaje("Se modifica un cliente");
+                    if (poscCliente == 0) {
+                        clsH.imprimeMensaje("No hay clientes añadidos, por favor agregue uno primero");
+                    } else {
+                        clsCl.modificarCliente(clientes, poscCliente);
+                    }
+                    break;
+                    
+                    
+                case 'D':
+                    if (poscCliente == 0) {
+                        clsH.imprimeMensaje("No existen cliente, agregue uno primero");
+                    } else {
+                        clsCl.eliminarCliente(clientes, poscCliente);
+                    }
+                    break;
+                    
+                case 'E':
+                    if (poscCliente == 0) {
+                        clsH.imprimeMensaje("No existen cliente, agregue uno primero");
+                    } else {
+                        clsH.imprimeMensaje("Se listan los clientes en la base de datos");
+                        clsCl.listarclientes(clientes, poscCliente);
+                    }
+                    break;
+                    
+                case 'F':
+                    if (poscCliente == 0) {
+                        clsH.imprimeMensaje("No existen cliente, agregue uno primero");
+                    } else {
+                        int pos = clsCl.buscarposccliente(clientes, poscCliente, "agregarle cuentas");
+                        if (pos == -1){
+                            clsH.imprimeMensaje("No se encontraron coincidencias");
+                        }else{
+                            clientes[pos] = this.MenuAdministrarCuentas(clientes[pos]);
+                        }
+                        
+                    }
+                    break;
+
+                case 'G':
+                    if (poscCliente == 0) {
+                        clsH.imprimeMensaje("No existen cliente, agregue uno primero");
+                    } else {
+                        clsH.imprimeMensaje("Se busca un cliente por su identificacion");
+                        clsCl.buscarcliente(clientes, poscCliente);
+                        
+                    }
+                    break;
+                case 'R':
+                    break;
+                default:
+                    clsH.imprimeMensaje("La opcion no es valida");
+                    break;
+            }
+        } while (opcion != 'R');
+    }
 }
