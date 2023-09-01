@@ -537,4 +537,158 @@ public class clsInicio {
         cliente.setListaCuentas(cuentas);
         return cliente;
     }
+    
+    public clsCliente MenuCliente(clsCliente cliente) {
+        Date date = new Date();
+        clsHelper clsH = new clsHelper();
+        clsCuentas clsC = new clsCuentas();
+        int cantidad_extraer = 0;
+        int cantidad_ingresar = 0;
+        int cantidad_transferir =0;
+        char opcion = ' ';
+        //clsCuentas clsCl = new clsCuentas();
+        do {
+            opcion = clsH.recibeChar(pantallaBienvenida(cliente)+"\n"
+                    + "Seleccione una de las siguientes opciones:\n"
+                    + "A. Revisar Estado de Cuentas\n"
+                    + "B. Hacer retiro de dinero\n"
+                    + "C. Hacer deposito de dinero\n"
+                    + "D. Hacer una transferencia\n"
+                    + "E. Generar reportes\n"
+                    + "S. Sair");
+            switch (opcion) {
+                case 'A':
+                    clsH.imprimeMensaje("Se le daran los estados de la cuenta");
+                    //clsC.imprimeEstadosDeCuenta(cliente);
+                    char opcion2 = ' ';
+                    do {
+                        opcion2 = clsH.recibeChar( "Seleccione una de las siguientes opciones:\n"
+                            + "A. Estado actual cuenta\n"
+                            + "B. Detalle transacciones por tipo y fecha\n"
+                            + "S. Sair");
+                        switch (opcion2) {
+                            case 'A':
+                                clsH.imprimeMensaje("Reporte 1");
+                                String impresion = "TipoCuenta \t NumeroCuenta \t NumeroTarjeta \t CVV \t FechaVencimiento \t Monto Disponible \t Moneda \t Pin \t Activa \t Fecha\n";
+                                for (int i = 1; i < cliente.getListaCuentas().length; i++) {
+                                    impresion += "\n" + cliente.getListaCuentas()[i].toString()+" \t "+date+ "\n";
+                                }
+                                impresion += "------------------------------------------------------\n";
+                                impresion += "Identificacion   \tNombre   \tSexo   \tFechaNacimiento  \tIngresoAprox   \tResidencia   \tCorreo    \tNumeroTelefono    \n"
+                                        + cliente.toString();
+                                
+                                clsH.imprimeMensaje(new TextArea(impresion));
+                                break;
+                                
+                            case 'B':
+                                clsH.imprimeMensaje("Reporte 2");
+                                impresion = "TipoCuenta \t NumeroCuenta \t Monto transaccion \t Fecha transaccion \n"
+                                        + cliente.getListaCuentas()[0].getTipoCuenta()+ "\t" + cliente.getListaCuentas()[0].getNumeroCuenta() + "\t"
+                                        + (cantidad_ingresada_clientes +cantidad_extraida_clientes) + " colones \t " + date;
+                                
+                                clsH.imprimeMensaje(new TextArea(impresion));
+                                break;
+                            case 'S':
+                                break;
+                            default:
+                                clsH.imprimeMensaje("Opcion invalida");
+                            }
+                        }while(opcion2 != 'S');
+                        break;
+                        
+                case 'B':
+                    clsH.imprimeMensaje("Se procedera a hacer el retiro");
+                    do{
+                        cantidad_extraer = clsH.recibeInt("Digite la cantidad que desea extraer de la maquina");
+
+                        if ((cantidad_extraer % 1000) != 0 && cantidad_extraer < 1000){
+                            clsH.imprimeMensaje("La cantidad ingresada es invalida, debe de ser por encima de 1000 y ser divisible por 1000");
+                        }
+                    }while((cantidad_extraer % 1000) != 0 && cantidad_extraer < 1000);
+                    
+                    dineroMaquina = clsC.extraccion(dineroMaquina, cliente, cantidad_extraer);
+                    cantidad_extraida_clientes += cantidad_extraer;
+                    transacciones_generales ++;
+                    transacciones_clientes ++;
+                    break;
+                    
+                case 'C':
+                    clsH.imprimeMensaje("Se procedera a hacer el deposito");
+                    do{
+                        cantidad_ingresar = clsH.recibeInt("Digite la cantidad que desea extraer de la maquina");
+
+                        if ((cantidad_ingresar % 1000) != 0 && cantidad_ingresar < 1000 && cantidad_ingresar > dineroMaquina){
+                            clsH.imprimeMensaje("La cantidad ingresada es invalida, debe de ser por encima de 1000 y ser divisible por 1000 y no debe de pasarse del monto en la maquina que es: "+dineroMaquina);
+                        }
+                    }while((cantidad_ingresar % 1000) != 0 && cantidad_ingresar < 1000 && cantidad_ingresar > dineroMaquina);
+                    dineroMaquina = clsC.Deposito(dineroMaquina, cliente, cantidad_ingresar);
+                    cantidad_ingresada_clientes += cantidad_ingresar;
+                    transacciones_generales ++;
+                    transacciones_clientes ++;
+                    break;
+                                        
+                case 'D':
+                    clsH.imprimeMensaje("Se procedera a hacer la transferencia");
+                    do{
+                        cantidad_transferir = clsH.recibeInt("Digite la cantidad que desea extraer de la maquina");
+
+                        if ((cantidad_transferir % 1000) != 0 && cantidad_transferir < 1000  && cantidad_ingresar > dineroMaquina){
+                            clsH.imprimeMensaje("La cantidad ingresada es invalida, debe de ser por encima de 1000 y ser divisible por 1000  y no debe de pasarse del monto en la maquina que es: "+dineroMaquina);
+                        }
+                        
+                    }while((cantidad_transferir % 1000) != 0 && cantidad_transferir < 1000 && cantidad_ingresar > dineroMaquina);
+                    String NCuentaATransferir = clsH.recibeString("Digite el numero de cuenta a la que desea transferir");
+                    
+                    if (clsC.buscarPosCuenta(clientes, poscCliente, NCuentaATransferir ) != -1)  {
+                        dineroMaquina = clsC.Tranferencia(cliente, clientes, clsC.buscarPosCuenta(clientes, poscCliente, NCuentaATransferir), cantidad_transferir, dineroMaquina);
+                        cantidad_extraida_clientes += cantidad_transferir;
+                        transacciones_generales ++;
+                        transacciones_clientes ++;
+
+                    }else{
+                        clsH.imprimeMensaje("No se encontro otra cuenta con ese numero de cuenta");
+                    }
+                    break;
+                    
+                case 'E':
+                    clsH.imprimeMensaje("Se generan los reportes");
+                    
+                case 'S':
+                    clsH.imprimeMensaje("Gracias por visitar el cajero");
+                default:
+                    clsH.imprimeMensaje("La opcion no es valida");
+                    break;
+            }
+        } while (opcion != 'S');
+        return cliente;
+    }
+    
+    public String pantallaBienvenida(clsCliente cliente){
+        Date date = new Date();
+        char opcion = ' ';
+        String imprimirArea = "Bienvenido "+cliente.getNombreCompleto()+"\n";
+        imprimirArea += "------------------------------------------------------\nTipo Cuenta\tSaldo\tNumerotarjeta\tCVV\tfecha\n";
+        for (int i = 0; i < cliente.getListaCuentas().length; i++){
+            if (cliente.getListaCuentas()[i].getActiva() != 'I'){
+                imprimirArea += cliente.getListaCuentas()[i].getTipoCuenta() + " \t " + cliente.getListaCuentas()[i].getMonto() +" \t "+cifrar(cliente.getListaCuentas()[i].getNumeroTarjeta())+" \n "
+                        +cliente.getListaCuentas()[i].getCVV()+" \t "+date;
+            imprimirArea += "------------------------------------------------------\n";
+            }
+        }
+        return imprimirArea;
+    }
+    
+    public String cifrar(String Numerotarjeta){
+        String cifrado = "";
+        int cont = Numerotarjeta.length() - 4;
+        for(int i=0; i<Numerotarjeta.length()-4;i++){
+            if (cont != 0){
+                cifrado += "*";
+            }
+            cont--;
+        
+        cifrado += Numerotarjeta.substring(Numerotarjeta.length() - 4);
+        }
+        return cifrado;
+    }
 }
