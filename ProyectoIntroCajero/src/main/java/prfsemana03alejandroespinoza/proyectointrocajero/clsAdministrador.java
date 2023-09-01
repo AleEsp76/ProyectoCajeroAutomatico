@@ -103,13 +103,158 @@ public class clsAdministrador {
         return posAdministrador;
     }
     
-    public void listarAdministradores(clsAdministrador administradores[], int posAdministrador){
-        String impresion = "Identificacion\tNombre\tPuesto\tContraseña\tAño de Ingreso\n";
+    public int obtenerPosAdministrador(clsAdministrador administradores[], int posAdministrador, String accion) {
         clsHelper clsH = new clsHelper();
-        for (int i = 0; i<posAdministrador; i++){
-            impresion += "\n"+administradores[i].toString()+"\n";
+        String identificacionBuscar = clsH.recibeString("Digite la identificacion del administrador que desea"+accion+":");
+        int posAdministradorBuscado = -1;
+        for (int i = 0; i < posAdministrador; i++) {
+            if (identificacionBuscar.equalsIgnoreCase(administradores[i].getIdentificacion())) {
+                posAdministradorBuscado = i;
+                break;
+            }
         }
-            clsH.imprimeMensaje(new TextArea(impresion));
+        return posAdministradorBuscado;
+    }
+
+    public clsAdministrador[] modificarAdministrador(clsAdministrador administradores[], int posAdministrador) {
+        clsHelper clsH = new clsHelper();
+        int pos = this.obtenerPosAdministrador(administradores, posAdministrador, "modificar");
+        if (pos == -1) {
+            clsH.imprimeMensaje("No se encontraron administradores con el nombre indicado, intente nuevamente");
+        } else {
+            char opcion = ' ';
+            do {
+                opcion = clsH.recibeChar("Seleccione el tipo de dato que desea modificar: "
+                        + "\n A. Nombre"
+                        + "\n B. Puesto"
+                        + "\n C. Contrasenna"
+                        + "\n D. Año de Ingreso"
+                        + "\n S. Salir");
+
+                switch (opcion) {
+                    case 'A':
+                        administradores[pos].setNombre(clsH.recibeString("Digite el nuevo nombre completo del administrador:"));
+                        break;
+                    case 'B':
+                        administradores[pos].setPuesto(clsH.recibeString("Digite el nuevo puesto del administrador:"));
+                        break;
+                    case 'C':
+                        administradores[pos].setContrasenna(clsH.recibeString("Digite la nueva contrasenna del Administrador"));
+                        break;
+                    case 'D':
+                        administradores[pos].setAnnoIngreso(clsH.recibeString("Digite el nuevo anno de ingreso del Administrador"));
+                        break;
+                    case 'S':
+                        clsH.imprimeMensaje("Los datos se han modificado exitosamente");
+                        break;
+                    default:
+                        clsH.imprimeMensaje("La opcion no es valida");
+                }
+
+            } while (opcion != 'S');
+        }
+        return administradores;
+    }
+
+    
+    
+     public int revisarIdentificacion (clsAdministrador administradores[], int posAdministrador, String Identificacion, int existe){
+        clsHelper clsH = new clsHelper();
+        for (int i = 0; i < posAdministrador; i++) {
+            if (Identificacion.equalsIgnoreCase(administradores[i].getIdentificacion())) {
+                existe++;
+                break;
+            }
+        } 
+        if (existe>0){
+            clsH.imprimeMensaje("Este numero de identificacion ya existe");
+        }
+        return existe;
+    }
+    
+    public int agregarAdministrador(clsAdministrador administradores[], int posAdministrador) {
+        clsHelper clsH = new clsHelper();
+        do{
+            Identificacion = clsH.recibeString("Digite la identifacion:");
+        }while(revisarIdentificacion(administradores, posAdministrador, Identificacion,0) != 0);
+        
+        Nombre = clsH.recibeString("Digite el nombre completo:");
+        Puesto = clsH.recibeString("Digite el puesto:");
+        Contrasenna = clsH.recibeString("Digite la contraseña:");
+        AnnoIngreso = clsH.recibeString("Digite el año de ingreso:");
+        do{
+            Habilitado = clsH.recibeChar("Digite si el administrador esta S - habilitado o N - desabilitado");
+        }while(Habilitado != 'S' && Habilitado != 'N');
+        administradores[posAdministrador] = new clsAdministrador(Identificacion, Nombre, Puesto, Contrasenna, AnnoIngreso, Habilitado);
+        posAdministrador++;
+        return posAdministrador;
+    }
+    
+    
+    
+    public void deshabilitarAdministrador(clsAdministrador administradores[],int posAdministrador){
+        clsHelper clsH = new clsHelper();
+        int pos = this.obtenerPosAdministrador(administradores, posAdministrador, "habilitar o deshabilitar");
+        if (pos == -1) {
+            clsH.imprimeMensaje("No se encontraron administradores con la identificacion indicada, intente nuevamente");
+        } else {
+            if (administradores[pos].getHabilitado() == 'S'){
+                administradores[pos].setHabilitado('N');
+                clsH.imprimeMensaje("El administrador ha sido deshabilitado de forma correcta");
+            }else{
+                administradores[pos].setHabilitado('S');
+                clsH.imprimeMensaje("El administrador ha sido habilitado de forma correcta");
+            }
+        }  
+    }    
+    
+    
+    
+     public int buscarAdministrador(clsAdministrador administradores[], int posAdministrador, String identificacion, String contrasenna){
+        int posAdministradorBuscado = -1;
+        for (int i = 0; i < posAdministrador; i++) {
+            if (identificacion.equalsIgnoreCase(administradores[i].getIdentificacion()) && contrasenna.equalsIgnoreCase(administradores[i].getContrasenna())) {
+                posAdministradorBuscado = i;
+                break;
+            }
+        }
+        return posAdministradorBuscado;
+    }
+     
+     public void extraccionAdministrador(int dinero_a_extraer){
+        clsHelper clsH = new clsHelper();
+        int [] denominaciones = {20000, 10000, 5000, 2000, 1000};
+        int [] cantidades = new int[denominaciones.length];
+        
+        
+        String imprimir = "La transaccion se le dara de la siguiente manera:\nCantidad \t Denominacion \n";
+        for (int i = 0; i < denominaciones.length; i++) {
+            int cantidad = dinero_a_extraer / denominaciones[i];
+            cantidades[i] = cantidad;
+            dinero_a_extraer %= denominaciones[i];
+            if(cantidad >= 1){
+                imprimir += cantidades[i] + " \t " + denominaciones[i]+ " colones \n";
+        
+            }
+        }
+        clsH.imprimeMensaje(imprimir);
+    }
+     
+      public void desglosar(int dineroMaquina){
+        clsHelper clsH = new clsHelper();
+        int [] denominaciones = {20000, 10000, 5000, 2000, 1000};
+        int [] cantidades = new int[denominaciones.length];
+        
+        int monto = 0;
+        String imprimir = "Cantidad \t Denominacion \n";
+        for (int i = 0; i < denominaciones.length; i++) {
+            monto = dineroMaquina;
+            int cantidad = monto / denominaciones[i];
+            cantidades[i] = cantidad;
+            monto %= denominaciones[i];
+            imprimir += cantidades[i] + " \t " + denominaciones[i]+ " colones \n";
+        }
+        clsH.imprimeMensaje(imprimir);
     }
         
 }
